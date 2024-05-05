@@ -17,7 +17,7 @@ const Advertisement = ({
   },
   colors = ['blue', 'green', 'red'],
   ...props
-}) => {
+}: Props) => {
   return (
     <div
       className="
