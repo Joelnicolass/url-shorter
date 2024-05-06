@@ -3,6 +3,8 @@
 import React from 'react';
 import InputWithButton from '../design_system/input_with_button/input_with_button';
 import { useFormCreateShortUrl } from '../../hooks/use_form_create_short_url';
+import iconCopy from '../../../assets/copy_icon.svg';
+import Image from 'next/image';
 
 const FormCreateShortUrl = () => {
   const {
@@ -11,6 +13,7 @@ const FormCreateShortUrl = () => {
     isLoading,
     setValue,
     handleSubmit,
+    redirectToUrl,
     handleCopyToClipboard,
   } = useFormCreateShortUrl();
 
@@ -54,9 +57,28 @@ const FormCreateShortUrl = () => {
                 "
           >
             {shortUrl && (
-              <div onClick={handleCopyToClipboard} className="cursor-pointer">
-                <span className="text-blue-500">https://short.ar/</span>
-                <span className="text-orange-400">{shortUrl}</span>
+              <div
+                className="
+                cursor-pointer
+                flex
+                gap-2
+              "
+              >
+                <div
+                  onClick={() => redirectToUrl(`https://short.ar/${shortUrl}`)}
+                >
+                  <span className="text-blue-500">
+                    https://short.ar/
+                    <span className="text-orange-400">{shortUrl}</span>
+                  </span>
+                </div>
+                <Image
+                  onClick={handleCopyToClipboard}
+                  src={iconCopy}
+                  alt="icon copy"
+                  width={20}
+                  height={20}
+                />
               </div>
             )}
           </div>

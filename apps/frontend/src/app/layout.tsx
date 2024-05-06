@@ -1,3 +1,4 @@
+import { RootProvider } from '../presentation/providers/root_provider';
 import './global.css';
 
 export const metadata = {
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        <RootProvider>{children}</RootProvider>
+      </body>
     </html>
   );
 }
