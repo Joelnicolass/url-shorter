@@ -46,6 +46,7 @@ const Page = ({ params }: Props) => {
     });
   }, [id, router]);
 
+  // TODO -> agregar spinner
   return null;
 };
 
