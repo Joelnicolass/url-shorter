@@ -1,10 +1,11 @@
 import { UrlShortenerDatasource } from '../../domain/datasources/url_shortener.datasource';
 import { URLShortener } from '../../domain/entities/url_shortener';
+import { URL_BASE } from '../../utils/constants';
 
 export class UrlShortenerDatasourceImpl implements UrlShortenerDatasource {
   async createShortUrl(originalUrl: string): Promise<URLShortener> {
     try {
-      const url = 'http://localhost:8080/api/shortener';
+      const url = URL_BASE + '/api/shortener';
 
       const formData = new FormData();
       formData.append('url', originalUrl);

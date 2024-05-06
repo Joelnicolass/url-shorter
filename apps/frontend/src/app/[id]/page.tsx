@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import { URL_BASE } from '../../utils/constants';
 
 type Props = {
   params: {
@@ -9,7 +9,7 @@ type Props = {
 
 const Page = ({ params }: Props) => {
   const { id } = params;
-  window.location.href = 'http://localhost:8080/' + id;
+  window.location.href = URL_BASE + id;
 };
 
 export default Page;
