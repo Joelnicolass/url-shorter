@@ -13,12 +13,16 @@ async function verifyValidRedirection(id: string): Promise<boolean> {
     });
 
     if (!response.ok) {
-      return false;
+      throw new Error(response.status.toString());
     }
 
     return true;
   } catch (error) {
-    return false;
+    if ((error as Error).message === '404') {
+      return false;
+    }
+
+    return true;
   }
 }
 
