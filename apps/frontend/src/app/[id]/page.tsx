@@ -9,7 +9,7 @@ type Props = {
 
 const Page = ({ params }: Props) => {
   const { id } = params;
-  window.location.href = URL_BASE + id;
+  window.location.href = `${URL_BASE}/${id}`;
 };
 
 export default Page;
