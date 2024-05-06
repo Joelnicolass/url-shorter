@@ -41,6 +41,8 @@ const Page = ({ params }: Props) => {
       }
     });
   }, [id, router]);
+
+  return null;
 };
 
 export default Page;
