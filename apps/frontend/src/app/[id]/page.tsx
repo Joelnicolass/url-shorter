@@ -4,7 +4,7 @@ import { URL_BASE } from '../../utils/constants';
 import { useRouter } from 'next/navigation';
 
 // TODO -> mover a caso de uso
-export async function verifyValidRedirection(id: string): Promise<boolean> {
+async function verifyValidRedirection(id: string): Promise<boolean> {
   const url = `${URL_BASE}/api/shortener/${id}`;
 
   try {
