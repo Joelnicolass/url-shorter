@@ -1,1 +1,1 @@
-export const URL_BASE = 'hospitable-unity-production.up.railway.app';
+export const URL_BASE = 'https://hospitable-unity-production.up.railway.app';
