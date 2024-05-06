@@ -4,6 +4,7 @@ import arrow.core.Either
 import com.jns.urlshortener.domain.entities.UrlShortener
 import com.jns.urlshortener.domain.exceptions.GenericException
 import com.jns.shortener.utils.Constants
+import com.jns.urlshortener.domain.exceptions.DuplicateUrlException
 import com.jns.urlshortener.domain.repositories.UrlShortenerRepository
 import com.jns.urlshortener.domain.services.UrlShortenerServices
 import org.springframework.beans.factory.annotation.*
@@ -24,15 +25,33 @@ class UrlShortenerServicesImpl : UrlShortenerServices{
     }
   }
 
-  override fun save(url: String): Either<Exception, String>{
+  private fun verifyAndFormatUrl(url: String): String {
+    return if (url.contains("http")) {
+      url
+    } else {
+      "http://$url"
+    }
+  }
+
+  override fun save(url: String): Either<Exception, UrlShortener>{
     try {
       val entity = createUrlShortener(url)
       val result: Either<Exception, UrlShortener> = _repository.save(entity)
 
-      return when(result){
-        is Either.Right -> Either.Right(result.value.shortUrl)
-        is Either.Left -> Either.Left(GenericException(Constants.ERROR_GENERIC))
-      }
+      result.fold<Nothing>(
+        ifLeft = {
+          if (it is DuplicateUrlException) {
+            val existEntity: UrlShortener = _repository.findByOriginalUrl(url).getOrNull()
+              ?: throw GenericException(Constants.ERROR_GENERIC)
+            return Either.Right(existEntity)
+          } else {
+            return Either.Left(it)
+          }
+        },
+        ifRight = {
+          return Either.Right(it)
+        }
+      )
 
     } catch (e: Exception) {
       println("Error al guardar la entidad: ${e.message}")
@@ -48,17 +67,14 @@ class UrlShortenerServicesImpl : UrlShortenerServices{
 
       entity.hit()
 
-      val updatedEntity: Either<Exception, UrlShortener> = _repository.save(entity)
+      val updatedEntity: UrlShortener = _repository.save(entity).getOrNull()
+      ?: throw GenericException(Constants.ERROR_GENERIC)
 
-      return when(updatedEntity){
-        is Either.Right -> Either.Right(updatedEntity.value.originalUrl)
-        is Either.Left -> Either.Left(GenericException(Constants.ERROR_GENERIC))
-      }
+      return Either.Right(verifyAndFormatUrl(updatedEntity.originalUrl))
 
     } catch (e: Exception) {
       println("Error al redirigir la entidad: ${e.message}")
       return Either.Left(GenericException(Constants.ERROR_GENERIC))
     }
   }
-
 }

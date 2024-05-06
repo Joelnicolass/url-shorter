@@ -33,7 +33,8 @@ class Encode {
 
     fun generateShortCode(originalUrl: String): String {
       val hashBytes = md5(originalUrl)
-      return encodeBase62(hashBytes)
+      val hash = hashBytes.sliceArray(0..3)
+      return encodeBase62(hash)
     }
   }
 
