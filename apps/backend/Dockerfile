@@ -18,3 +18,12 @@ CMD ["java", "-jar", "build/libs/urlshortener-0.0.1-SNAPSHOT.jar"]
 
 # docker build . -t urlshortener
 # docker run -d -p 8080:8080 -it urlshortener
+
+
+# push docker hub
+
+# docker tag urlshortener:latest joelnicolass/url-shortener-api:latest
+
+# docker push joelnicolass/url-shortener-api:latest
+
+# docker buildx build --platform linux/amd64,linux/arm64 -t joelnicolass/url-shortener-api:latest --push .
