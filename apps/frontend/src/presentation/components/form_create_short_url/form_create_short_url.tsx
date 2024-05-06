@@ -1,22 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import InputWithButton from '../design_system/input_with_button/input_with_button';
-import { urlShortenerUsecases } from 'apps/frontend/src/infrastructure/usecases/url_shortener.usecases_impl';
+import { useFormCreateShortUrl } from '../../hooks/use_form_create_short_url';
 
 const FormCreateShortUrl = () => {
-  const [value, setValue] = useState<string>('');
-  const [shortUrl, setShortUrl] = useState<string>('');
-
-  const handleSubmit = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    const result = await urlShortenerUsecases.createShortUrlUsecase.execute(
-      value
-    );
-    setShortUrl(result.shortUrl);
-  };
+  const {
+    value,
+    shortUrl,
+    isLoading,
+    setValue,
+    handleSubmit,
+    handleCopyToClipboard,
+  } = useFormCreateShortUrl();
 
   return (
     <div
@@ -34,6 +30,7 @@ const FormCreateShortUrl = () => {
           buttonProps={{
             type: 'submit',
             onClick: handleSubmit,
+            disabled: isLoading,
           }}
           inputProps={{
             type: 'text',
@@ -57,10 +54,10 @@ const FormCreateShortUrl = () => {
                 "
           >
             {shortUrl && (
-              <>
+              <div onClick={handleCopyToClipboard} className="cursor-pointer">
                 <span className="text-blue-500">https://short.ar/</span>
                 <span className="text-orange-400">{shortUrl}</span>
-              </>
+              </div>
             )}
           </div>
         </div>

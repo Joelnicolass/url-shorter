@@ -16,7 +16,9 @@ const InputWithButton = ({ buttonProps, inputProps, children }: Props) => {
         {...inputProps}
       />
       <button
-        className="h-12 px-6 text-lg text-white bg-orange-400 border border-orange-400 rounded-r-lg hover:bg-orange-500 focus:outline-none"
+        className={`h-12 px-6 text-lg text-white bg-orange-400 border border-orange-400 rounded-r-lg hover:bg-orange-500 focus:outline-none
+        ${buttonProps?.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+        `}
         {...buttonProps}
       >
         {children}
