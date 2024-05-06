@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 // TODO -> mover a caso de uso
 async function verifyValidRedirection(id: string): Promise<boolean> {
-  const url = `${URL_BASE}/api/shortener/${id}`;
+  const url = `${URL_BASE}/${id}`;
 
   try {
     const response = await fetch(url, {
