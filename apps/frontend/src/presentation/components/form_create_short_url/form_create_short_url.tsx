@@ -33,7 +33,7 @@ const FormCreateShortUrl = () => {
           buttonProps={{
             type: 'submit',
             onClick: handleSubmit,
-            disabled: isLoading,
+            disabled: isLoading || !value,
           }}
           inputProps={{
             type: 'text',
