@@ -12,7 +12,8 @@ const InputWithButton = ({ buttonProps, inputProps, children }: Props) => {
       <input
         type="text"
         placeholder="Pegá tu URL acá"
-        className="w-80 h-12 px-4 text-lg border border-gray-300 rounded-l-lg focus:outline-none focus:border-orange-400"
+        className="w-80 h-12 px-4 text-lg border border-gray-400
+        border-r-0 rounded-l-lg focus:outline-none focus:border-orange-400"
         {...inputProps}
       />
       <button
