@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { urlShortenerUsecases } from '../../infrastructure/usecases/url_shortener.usecases_impl';
 import { useRouter } from 'next/navigation';
 import { useNotify } from '../providers/toast_provider';
+import { isValidUrl } from '../../utils/url';
 
 export const useFormCreateShortUrl = () => {
   const { push } = useRouter();
@@ -16,11 +17,20 @@ export const useFormCreateShortUrl = () => {
   ) => {
     event.preventDefault();
     setIsLoading(true);
-    const result = await urlShortenerUsecases.createShortUrlUsecase.execute(
-      value
-    );
-    setShortUrl(result.shortUrl);
-    setIsLoading(false);
+
+    try {
+      if (!isValidUrl(value)) throw new Error('URL inválida');
+
+      const result = await urlShortenerUsecases.createShortUrlUsecase.execute(
+        value
+      );
+
+      setShortUrl(result.shortUrl);
+    } catch (error) {
+      notify((error as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCopyToClipboard = async () => {
