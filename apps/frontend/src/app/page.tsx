@@ -1,8 +1,7 @@
 import Background from '../presentation/components/background/background';
-
-import Spacer from '../presentation/components/design_system/spacer/spacer';
 import FormCreateShortUrl from '../presentation/components/form_create_short_url/form_create_short_url';
 import HeaderTitle from '../presentation/components/header_title/header_title';
+import { getYear } from '../utils/date';
 
 export default function Index() {
   return (
@@ -28,7 +27,20 @@ export default function Index() {
         <FormCreateShortUrl />
       </section>
 
-      <Spacer height="50px" />
+      <footer
+        className="
+        z-10
+        flex
+        flex-col
+        items-center
+        justify-center
+        text-gray-400
+        text-sm
+        "
+      >
+        <p> © {getYear()} Short.ar</p>
+        <p>Joel Nicolas Sartori</p>
+      </footer>
     </main>
   );
 }
